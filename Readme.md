@@ -1,5 +1,165 @@
 
-## Таблица с эндпоинтами и примерами
+# API  для пд
+
+
+## Установка и запуск
+
+1. Клонируйте:
+   ```
+   git clone https://github.com/your-username/consult-api.git
+   cd consult-api
+   ```
+
+2. Создайте и активируйте виртуальное окружение:
+   ```
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. Установите зависимости:
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. Запустите сервер:
+   ```
+   gunicorn -w 1 -b localhost:5050 --log-file=gunicorn.log --pid=/var/run/gunicorn-consult-API-flask.pid app:app
+   ```
+
+Сервер будет доступен по адресу `http://localhost:5000`.
+
+## Эндпоинты API
+
+### Отправить заявку
+
+- **URL:** `/add_consult`
+- **Метод:** POST
+- **Тело запроса:**
+  ```json
+  {
+    "student_name": "Иван",
+    "group": "241-3210",
+    "mentor": "Дмитрий",
+    "preferred_date": "2024-09-30",
+    "preferred_time": "16:00",
+    "topic": "Виды подключения к Интернету.",
+    "comments": "",
+    "discord": "@abcdefg"
+  }
+  ```
+- **Успешный ответ:** Код 201
+  ```json
+  {
+    "id": 1,
+    "student_name": "Иван",
+    "group": "241-3210",
+    "mentor": "Дмитрий",
+    "preferred_date": "2024-09-30",
+    "preferred_time": "16:00:00",
+    "topic": "Виды подключения к Интернету.",
+    "comments": "",
+    "discord": "@abcdefg"
+  }
+  ```
+
+### Получить заявку
+
+- **URL:** `/consults/<consult_id>`
+- **Метод:** GET
+- **Успешный ответ:** Код 200
+  ```json
+  {
+    "id": 1,
+    "student_name": "Иван",
+    "group": "241-3210",
+    "mentor": "Дмитрий",
+    "preferred_date": "2024-09-30",
+    "preferred_time": "16:00:00",
+    "topic": "Виды подключения к Интернету.",
+    "comments": "",
+    "discord": "@abcdefg"
+  }
+  ```
+
+### Получить список заявок
+
+- **URL:** `/consults`
+- **Метод:** GET
+- **Успешный ответ:** Код 200
+  ```json
+  [
+    {
+    "id": 1,
+    "student_name": "Иван",
+    "group": "241-3210",
+    ...
+    },
+    {
+    "id": 2,
+    "student_name": "Мария",
+    "group": "241-321",
+    ...
+    }
+  ]
+  ```
+
+### Изменить заявку
+
+- **URL:** `/consults/<consult_id>`
+- **Метод:** PUT
+- **Тело запроса (все поля опциональны):**
+  ```json
+  {
+    "student_name": "Иван Иванов",
+    "group": "241-321",
+    "mentor": "Елена",
+    "preferred_date": "2024-10-01",
+    "preferred_time": "17:00",
+    "topic": "Сетевые протоколы",
+    "comments": "Прошу перенести консультацию",
+    "discord": "@ivanov"
+  }
+  ```
+- **Успешный ответ:** Код 200
+  ```json
+  {
+    "id": 1,
+    "student_name": "Иван Иванов",
+    "group": "241-321",
+    "mentor": "Елена",
+    "preferred_date": "2024-10-01",
+    "preferred_time": "17:00:00",
+    "topic": "Сетевые протоколы",
+    "comments": "Прошу перенести консультацию",
+    "discord": "@ivanov"
+  }
+  ```
+
+### Удалить заявку
+
+- **URL:** `/consults/<consult_id>`
+- **Метод:** DELETE
+- **Успешный ответ:** Код 200
+  ```json
+  {
+    "message": "Заявка с id 1 удалена из базы данных"
+  }
+  ```
+
+## Тестирование
+
+Для тестирования API используйте скрипт `test_api.py`. Запустите его командой:
+
+```
+python test_api.py
+```
+
+Этот скрипт выполнит серию тестов для проверки всех эндпоинтов API.
+
+***
+
+
+## Таблица с эндпоинтами и примерами (часть старого оформления)
 
 
 | **ФТ**                 | **Endpoint**           | **HTTP-метод** | **Параметры запроса**             | **Пример тела запроса**                                                                                                                                                                                                                             | **Пример тела ответа**                                                                                                                                                                                                                                                                                        |

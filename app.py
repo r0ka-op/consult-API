@@ -118,7 +118,11 @@ def delete_consult(consult_id):
 
 def init_db():
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            print("Таблицы успешно созданы.")
+        except Exception as e:
+            print(f"Ошибка при создании таблиц: {e}")
 
 
 if __name__ == '__main__':

@@ -1,11 +1,14 @@
 #!/bin/sh
 GUNICORN=/home/std/consult-API/.venv/bin/gunicorn
-ROOT=/home/std/consult-API/app
+ROOT=/home/std/consult-API
 PID=/var/run/gunicorn-consult-API-flask.pid
-PORT=5050
+PORT=5000
 
 APP=app:app
 
-if [-f $PID]; then rm $PID; fi
+if [-f $PID]; then
+    rm $PID
+fi
 
-cd $ROOT exec $GUNICORN -w 1 -b localhost:$PORT --log-file=$ROOT/gunicorn.log --pid=$PID $APP
+cd $ROOT
+exec $GUNICORN -w 3 -b localhost:$PORT --log-file=$ROOT/gunicorn.log --pid=$PID $APP

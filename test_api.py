@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://test-consult-api.std-2388.ist.mospolytech.ru"
 
 
 def test_add_consult():

@@ -6,7 +6,7 @@
 
 1. Клонируйте:
    ```
-   git clone https://github.com/your-username/consult-api.git
+   git clone https://github.com/r0ka-op/consult-API.git
    cd consult-api
    ```
 

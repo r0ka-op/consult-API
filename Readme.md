@@ -26,7 +26,7 @@
    gunicorn -w 1 -b localhost:5050 --log-file=gunicorn.log --pid=/var/run/gunicorn-consult-API-flask.pid app:app
    ```
 
-Сервер будет доступен по адресу `http://localhost:5000`.
+Сервер будет доступен по адресу `http://localhost:5050`.
 
 ## Эндпоинты API
 

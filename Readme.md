@@ -7,7 +7,7 @@
 1. Клонируйте:
    ```
    git clone https://github.com/r0ka-op/consult-API.git
-   cd consult-api
+   cd consult-API
    ```
 
 2. Создайте и активируйте виртуальное окружение:

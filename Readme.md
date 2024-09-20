@@ -6,8 +6,8 @@
 
 1. Клонируйте:
    ```
-   git clone https://github.com/your-username/consult-api.git
-   cd consult-api
+   git clone https://github.com/r0ka-op/consult-API.git
+   cd consult-API
    ```
 
 2. Создайте и активируйте виртуальное окружение:
@@ -26,7 +26,7 @@
    gunicorn -w 1 -b localhost:5050 --log-file=gunicorn.log --pid=/var/run/gunicorn-consult-API-flask.pid app:app
    ```
 
-Сервер будет доступен по адресу `http://localhost:5000`.
+Сервер будет доступен по адресу `http://localhost:5050`.
 
 ## Эндпоинты API
 

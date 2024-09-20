@@ -23,7 +23,8 @@
 
 4. Запустите сервер:
    ```
-   gunicorn -w 1 -b localhost:5050 --log-file=gunicorn.log --pid=/var/run/gunicorn-consult-API-flask.pid app:app
+   python app.py    # Необходимо чтобы таблица успешно создалась
+   gunicorn -w 3 -b localhost:5050 --log-file=gunicorn.log --pid=/var/run/gunicorn-consult-API-flask.pid app:app
    ```
 
 Сервер будет доступен по адресу `http://localhost:5050`.

@@ -10,9 +10,8 @@ def test_add_consult():
         "student_name": "Иван",
         "group": "241-3210",
         "mentor": "Дмитрий",
-        "preferred_date": "2024-09-30",
-        "preferred_time": "16:00",
         "topic": "Виды подключения к Интернету.",
+        "comments": "",
         "comments": "",
         "discord": "@ivanov"
     }

@@ -14,11 +14,10 @@ class Consult(db.Model):
     student_name = db.Column(db.String(100), nullable=False)
     group = db.Column(db.String(20), nullable=False)
     mentor = db.Column(db.String(100), nullable=False)
-    preferred_date = db.Column(db.Date, nullable=False)
-    preferred_time = db.Column(db.Time, nullable=False)
     topic = db.Column(db.String(200), nullable=False)
     comments = db.Column(db.Text)
     discord = db.Column(db.String(100), nullable=False)
+    is_accepted = db.Column(db.Boolean, default=False)
 
     def to_dict(self):
         return {
@@ -26,11 +25,10 @@ class Consult(db.Model):
             'student_name': self.student_name,
             'group': self.group,
             'mentor': self.mentor,
-            'preferred_date': self.preferred_date.isoformat(),
-            'preferred_time': self.preferred_time.isoformat(),
             'topic': self.topic,
             'comments': self.comments,
-            'discord': self.discord
+            'discord': self.discord,
+            'is_accepted': self.is_accepted
         }
 
 
@@ -42,8 +40,6 @@ def add_consult():
             student_name=data['student_name'],
             group=data['group'],
             mentor=data['mentor'],
-            preferred_date=datetime.strptime(data['preferred_date'], '%Y-%m-%d').date(),
-            preferred_time=datetime.strptime(data['preferred_time'], '%H:%M').time(),
             topic=data['topic'],
             comments=data['comments'],
             discord=data['discord']
@@ -86,21 +82,49 @@ def update_consult(consult_id):
             consult.group = data['group']
         if 'mentor' in data:
             consult.mentor = data['mentor']
-        if 'preferred_date' in data:
-            consult.preferred_date = datetime.strptime(data['preferred_date'], '%Y-%m-%d').date()
-        if 'preferred_time' in data:
-            consult.preferred_time = datetime.strptime(data['preferred_time'], '%H:%M').time()
         if 'topic' in data:
             consult.topic = data['topic']
         if 'comments' in data:
             consult.comments = data['comments']
         if 'discord' in data:
             consult.discord = data['discord']
+        if 'is_accepted' in data:
+            consult.is_accepted = data['is_accepted']
 
         db.session.commit()
         return jsonify(consult.to_dict()), 200
     except ValueError as e:
         return jsonify({"error": f"Invalid data format: {str(e)}"}), 400
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
+
+@app.route('/consults/toggle-status/<int:consult_id>', methods=['POST'])
+def toggle_consult_status(consult_id):
+    try:
+        consult = Consult.query.get_or_404(consult_id)
+
+        # Инвертируем текущее значение is_accepted
+        consult.is_accepted = not consult.is_accepted
+
+        db.session.commit()
+        return jsonify(consult.to_dict()), 200
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
+@app.route('/consults/<int:consult_id>/accept', methods=['POST'])
+def accept_consult(consult_id):
+    try:
+        consult = Consult.query.get_or_404(consult_id)
+        consult.is_accepted = True
+        db.session.commit()
+        return jsonify(consult.to_dict()), 200
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({"error": f"Database error: {str(e)}"}), 500

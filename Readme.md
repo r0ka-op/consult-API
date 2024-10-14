@@ -41,8 +41,6 @@
     "student_name": "Иван",
     "group": "241-3210",
     "mentor": "Дмитрий",
-    "preferred_date": "2024-09-30",
-    "preferred_time": "16:00",
     "topic": "Виды подключения к Интернету.",
     "comments": "",
     "discord": "@abcdefg"
@@ -55,11 +53,10 @@
     "student_name": "Иван",
     "group": "241-3210",
     "mentor": "Дмитрий",
-    "preferred_date": "2024-09-30",
-    "preferred_time": "16:00:00",
     "topic": "Виды подключения к Интернету.",
     "comments": "",
-    "discord": "@abcdefg"
+    "discord": "@abcdefg",
+    "is_accepted" False
   }
   ```
 
@@ -74,11 +71,10 @@
     "student_name": "Иван",
     "group": "241-3210",
     "mentor": "Дмитрий",
-    "preferred_date": "2024-09-30",
-    "preferred_time": "16:00:00",
     "topic": "Виды подключения к Интернету.",
     "comments": "",
-    "discord": "@abcdefg"
+    "discord": "@abcdefg",
+    "is_accepted" False
   }
   ```
 
@@ -114,11 +110,10 @@
     "student_name": "Иван Иванов",
     "group": "241-321",
     "mentor": "Елена",
-    "preferred_date": "2024-10-01",
-    "preferred_time": "17:00",
     "topic": "Сетевые протоколы",
     "comments": "Прошу перенести консультацию",
-    "discord": "@ivanov"
+    "discord": "@ivanov",
+    "is_accepted" False
   }
   ```
 - **Успешный ответ:** Код 200
@@ -128,11 +123,28 @@
     "student_name": "Иван Иванов",
     "group": "241-321",
     "mentor": "Елена",
-    "preferred_date": "2024-10-01",
-    "preferred_time": "17:00:00",
     "topic": "Сетевые протоколы",
     "comments": "Прошу перенести консультацию",
-    "discord": "@ivanov"
+    "discord": "@ivanov",
+    "is_accepted" False
+  }
+  ```
+
+### Изменить статус заявку
+
+- **URL:** `consults/toggle-status/<int:consult_id>`
+- **Метод:** POST
+- **Успешный ответ:** Код 200
+  ```json
+  {
+    "id": 1,
+    "student_name": "Иван Иванов",
+    "group": "241-321",
+    "mentor": "Елена",
+    "topic": "Сетевые протоколы",
+    "comments": "Прошу перенести консультацию",
+    "discord": "@ivanov",
+    "is_accepted" True
   }
   ```
 

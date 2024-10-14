@@ -56,7 +56,7 @@
     "topic": "Виды подключения к Интернету.",
     "comments": "",
     "discord": "@abcdefg",
-    "is_accepted" False
+    "is_accepted": false
   }
   ```
 
@@ -74,7 +74,7 @@
     "topic": "Виды подключения к Интернету.",
     "comments": "",
     "discord": "@abcdefg",
-    "is_accepted" False
+    "is_accepted": false
   }
   ```
 
@@ -113,7 +113,7 @@
     "topic": "Сетевые протоколы",
     "comments": "Прошу перенести консультацию",
     "discord": "@ivanov",
-    "is_accepted" False
+    "is_accepted": false
   }
   ```
 - **Успешный ответ:** Код 200
@@ -126,7 +126,7 @@
     "topic": "Сетевые протоколы",
     "comments": "Прошу перенести консультацию",
     "discord": "@ivanov",
-    "is_accepted" False
+    "is_accepted": false
   }
   ```
 
@@ -144,7 +144,7 @@
     "topic": "Сетевые протоколы",
     "comments": "Прошу перенести консультацию",
     "discord": "@ivanov",
-    "is_accepted" True
+    "is_accepted": true
   }
   ```
 

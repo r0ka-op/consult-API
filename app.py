@@ -14,22 +14,18 @@ CORS(app)
 class Consult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_name = db.Column(db.String(100), nullable=False)
-    group = db.Column(db.String(20), nullable=False)
     mentor = db.Column(db.String(100), nullable=False)
     topic = db.Column(db.String(200), nullable=False)
     comments = db.Column(db.Text)
-    discord = db.Column(db.String(100), nullable=False)
     is_accepted = db.Column(db.Boolean, default=False)
 
     def to_dict(self):
         return {
             'id': self.id,
             'student_name': self.student_name,
-            'group': self.group,
             'mentor': self.mentor,
             'topic': self.topic,
             'comments': self.comments,
-            'discord': self.discord,
             'is_accepted': self.is_accepted
         }
 
@@ -40,11 +36,9 @@ def add_consult():
         data = request.json
         new_consult = Consult(
             student_name=data['student_name'],
-            group=data['group'],
             mentor=data['mentor'],
             topic=data['topic'],
-            comments=data['comments'],
-            discord=data['discord']
+            comments=data['comments']
         )
         db.session.add(new_consult)
         db.session.commit()
@@ -80,16 +74,12 @@ def update_consult(consult_id):
 
         if 'student_name' in data:
             consult.student_name = data['student_name']
-        if 'group' in data:
-            consult.group = data['group']
         if 'mentor' in data:
             consult.mentor = data['mentor']
         if 'topic' in data:
             consult.topic = data['topic']
         if 'comments' in data:
             consult.comments = data['comments']
-        if 'discord' in data:
-            consult.discord = data['discord']
         if 'is_accepted' in data:
             consult.is_accepted = data['is_accepted']
 
@@ -119,6 +109,7 @@ def toggle_consult_status(consult_id):
         return jsonify({"error": f"Database error: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
 
 @app.route('/consults/<int:consult_id>/accept', methods=['POST'])
 def accept_consult(consult_id):
@@ -153,4 +144,4 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=8000)

@@ -17,15 +17,17 @@ class Consult(db.Model):
     topic = db.Column(db.String(200), nullable=False)
     comments = db.Column(db.Text)
     is_accepted = db.Column(db.Boolean, default=False)
+    specialization = db.Column(db.String(10), nullable=False)  # Новое поле
 
     def to_dict(self):
         return {
             'id': self.id,
             'student_name': self.student_name,
+            'specialization': self.specialization,
             'mentor': self.mentor,
             'topic': self.topic,
             'comments': self.comments,
-            'is_accepted': self.is_accepted
+            'is_accepted': self.is_accepted,
         }
 
 
@@ -33,8 +35,12 @@ class Consult(db.Model):
 def add_consult():
     try:
         data = request.json
+        if 'specialization' not in data or data['specialization'] not in ['web', 'net']:
+            return jsonify({"error": "specialization must be either 'web' or 'net'"}), 400
+
         new_consult = Consult(
             student_name=data['student_name'],
+            specialization=data['specialization'],
             mentor=data['mentor'],
             topic=data['topic'],
             comments=data['comments']
@@ -81,6 +87,10 @@ def update_consult(consult_id):
             consult.comments = data['comments']
         if 'is_accepted' in data:
             consult.is_accepted = data['is_accepted']
+        if 'specialization' in data:  # Обработка обновления специализации
+            if data['specialization'] not in ['web', 'net']:
+                return jsonify({"error": "specialization must be either 'web' or 'net'"}), 400
+            consult.specialization = data['specialization']
 
         db.session.commit()
         return jsonify(consult.to_dict()), 200
@@ -97,10 +107,7 @@ def update_consult(consult_id):
 def toggle_consult_status(consult_id):
     try:
         consult = Consult.query.get_or_404(consult_id)
-
-        # Инвертируем текущее значение is_accepted
         consult.is_accepted = not consult.is_accepted
-
         db.session.commit()
         return jsonify(consult.to_dict()), 200
     except SQLAlchemyError as e:
@@ -142,5 +149,5 @@ def init_db():
 
 
 if __name__ == '__main__':
-    init_db()
+    # init_db()
     app.run(debug=True, port=8000)

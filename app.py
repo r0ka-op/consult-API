@@ -103,7 +103,7 @@ def update_consult(consult_id):
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 
-@app.route('/consults/toggle-status/<int:consult_id>', methods=['POST'])
+@app.route('/consults/toggle-status/<int:consult_id>', methods=['PATCH'])
 def toggle_consult_status(consult_id):
     try:
         consult = Consult.query.get_or_404(consult_id)
@@ -117,7 +117,7 @@ def toggle_consult_status(consult_id):
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 
-@app.route('/consults/<int:consult_id>/accept', methods=['POST'])
+@app.route('/consults/<int:consult_id>/accept', methods=['PATCH'])
 def accept_consult(consult_id):
     try:
         consult = Consult.query.get_or_404(consult_id)
@@ -129,6 +129,7 @@ def accept_consult(consult_id):
         return jsonify({"error": f"Database error: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
 
 
 @app.route('/consults/<int:consult_id>', methods=['DELETE'])
